@@ -3,14 +3,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpService } from '../../services/http.service';
 
 @Component({
-  selector: 'app-registration',
-  templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.scss'],
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
-export class RegistrationComponent {
-  constructor(private httpService: HttpService) {}
-
-  registrationForm = new FormGroup({
+export class LoginComponent {
+  loginForm = new FormGroup({
     email: new FormControl('', [Validators.required]),
     password: new FormControl('', [
       Validators.required,
@@ -18,9 +16,11 @@ export class RegistrationComponent {
     ]),
   });
 
-  onRegister() {
+  constructor(private httpService: HttpService) {}
+
+  onLogin() {
     this.httpService
-      .post({ path: 'registration', data: this.registrationForm.value })
+      .post({ path: 'auth/login', data: this.loginForm.value })
       .subscribe((data) => {
         console.log(data);
       });
