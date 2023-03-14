@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:alpine
+    environment:
+      POSTGRES_DB: test-db
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: username
+    ports:
+      - "5435:5432"
+    restart: on-failure
+
+  pgweb:
+    image: sosedoff/pgweb
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://username:password@postgres:5432/test-db?sslmode=disable
+    ports:
+      - "8085:8081"
+    restart: on-failure
